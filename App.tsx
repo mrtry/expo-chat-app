@@ -1,15 +1,26 @@
 import React from 'react'
-import Chat from './src/ui/pages/chat'
+import firebase from 'firebase'
 import { View, StyleSheet } from 'react-native'
 import { getBottomSpace, ifIphoneX } from 'react-native-iphone-x-helper'
+
+import Chat from './src/ui/pages/chat'
 import { ColorPallet } from './src/ui/styles'
+import config from './firebaseConfig'
 
-const app = () => (
-  <View style={styles.container}>
-    <Chat />
-  </View>
-)
+export default class App extends React.Component {
+  constructor(props) {
+    super(props)
+    firebase.initializeApp(config)
+  }
 
+  render() {
+    return (
+      <View style={styles.container}>
+        <Chat />
+      </View>
+    )
+  }
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -23,5 +34,3 @@ const styles = StyleSheet.create({
     ),
   },
 })
-
-export default app

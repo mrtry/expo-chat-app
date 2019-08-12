@@ -1,5 +1,4 @@
-interface Message {
-  uid: string
+export interface Message {
   body: string
   postedAt: Date
 }

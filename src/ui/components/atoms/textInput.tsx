@@ -13,6 +13,7 @@ interface Props {
   value?: string
   placeholder?: string
   onChangeText?: (text: string) => void
+  onSubmitEditing?: () => void
   style?: StyleProp<TextStyle>
 }
 
@@ -21,6 +22,7 @@ const CustomTextInput = (props: Props) => (
     value={props.value}
     placeholder={props.placeholder}
     onChangeText={text => props.onChangeText(text)}
+    onSubmitEditing={props.onSubmitEditing}
     style={[styles.container, props.style]}
   />
 )

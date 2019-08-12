@@ -7,12 +7,18 @@ import {
   ViewStyle,
   TouchableOpacity,
 } from 'react-native'
-import TextInput from '../components/atoms/textInput'
 import { Appbar, Divider } from 'react-native-paper'
-import styleType from '../../utils/styleType'
 import { MaterialIcons } from '@expo/vector-icons'
+
+import TextInput from '../components/atoms/textInput'
+import styleType from '../../utils/styleType'
 import { ColorPallet } from '../styles'
 import ChatMessage from '../components/atoms/chatMessage'
+import { Message } from '../../store/entity/message'
+import {
+  sendMessageAsync,
+  subscribeMessageRepository,
+} from '../../store/repository/MessageRepository'
 
 const PLACEHOLDER = 'テキストメッセージ'
 
@@ -24,23 +30,13 @@ interface State {
 export default class Chat extends React.Component<any, State> {
   state: State = {
     text: '',
-    messages: [
-      {
-        uid: '12345',
-        body: 'hoge',
-        postedAt: new Date(),
-      },
-      {
-        uid: '12343',
-        body: 'hogee',
-        postedAt: new Date(),
-      },
-      {
-        uid: '12346',
-        body: 'hogeeee',
-        postedAt: new Date(),
-      },
-    ],
+    messages: [],
+  }
+
+  async componentDidMount() {
+    const listener = (message: Message) =>
+      this.setState({ messages: [...this.state.messages, message] })
+    subscribeMessageRepository(listener)
   }
 
   render() {
@@ -56,7 +52,7 @@ export default class Chat extends React.Component<any, State> {
           renderItem={({ item }) => (
             <ChatMessage message={item} style={styles.flatListItem} />
           )}
-          keyExtractor={item => `${item.uid}-${item.postedAt}`}
+          keyExtractor={item => `${item.body}-${item.postedAt}`}
           ListHeaderComponent={<View style={styles.flatListHeader} />}
           style={styles.flatListContainer}
         />
@@ -68,6 +64,7 @@ export default class Chat extends React.Component<any, State> {
             placeholder={PLACEHOLDER}
             value={this.state.text}
             onChangeText={text => this.setState({ text })}
+            onSubmitEditing={this.onSendButtonPressed}
             style={styles.textInput}
           />
           <TouchableOpacity
@@ -85,7 +82,13 @@ export default class Chat extends React.Component<any, State> {
     )
   }
 
-  onSendButtonPressed = () => {
+  onSendButtonPressed = async () => {
+    const message: Message = {
+      body: this.state.text,
+      postedAt: new Date(),
+    }
+    await sendMessageAsync(message)
+
     this.setState({ text: '' })
   }
 }
