@@ -1,19 +1,27 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import Chat from './src/ui/pages/chat'
+import { View, StyleSheet } from 'react-native'
+import { getBottomSpace, ifIphoneX } from 'react-native-iphone-x-helper'
+import { ColorPallet } from './src/ui/styles'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
-  )
-}
+const app = () => (
+  <View style={styles.container}>
+    <Chat />
+  </View>
+)
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginBottom: getBottomSpace(),
+    ...ifIphoneX(
+      {
+        borderBottomWidth: 1,
+        borderColor: ColorPallet.gray300,
+      },
+      {}
+    ),
   },
 })
+
+export default app
