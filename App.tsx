@@ -5,7 +5,7 @@ import { getBottomSpace, ifIphoneX } from 'react-native-iphone-x-helper'
 
 import Chat from './src/ui/components/template/Chat'
 import { ColorPallet } from './src/ui/styles'
-import config from './firebaseConfig'
+import config from './FirebaseConfig'
 
 export default class App extends React.Component {
   constructor(props) {
