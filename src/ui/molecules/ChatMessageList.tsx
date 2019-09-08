@@ -1,8 +1,8 @@
 import React from 'react'
 import { StyleSheet, View, FlatList, ViewStyle } from 'react-native'
 
-import { Message } from '../../../store/entity/message'
-import styleType from '../../../utils/styleType'
+import { Message } from '../../store/entity/message'
+import styleType from '../../utils/styleType'
 import ChatMessage from '../atoms/chatMessage'
 
 interface Props {

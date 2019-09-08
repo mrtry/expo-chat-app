@@ -9,8 +9,10 @@ import {
 } from 'react-native'
 import { distanceInWordsToNow } from 'date-fns'
 import ja from 'date-fns/locale/ja'
-import styleType from '../../../utils/styleType'
-import { ColorPallet } from '../../styles'
+
+import { Message } from '../../store/entity/message'
+import styleType from '../../utils/styleType'
+import { ColorPallet } from '../styles'
 
 interface Props {
   message: Message

@@ -3,13 +3,13 @@ import { StyleSheet, KeyboardAvoidingView, ViewStyle } from 'react-native'
 import { Appbar, Divider } from 'react-native-paper'
 
 import TextInputForm from '../molecules/TextInputForm'
-import styleType from '../../../utils/styleType'
+import styleType from '../../utils/styleType'
 import ChatMessageList from '../molecules/ChatMessageList'
-import { Message } from '../../../store/entity/message'
+import { Message } from '../../store/entity/message'
 import {
   sendMessageAsync,
   subscribeMessageRepository,
-} from '../../../store/repository/MessageRepository'
+} from '../../store/repository/MessageRepository'
 
 const PLACEHOLDER = 'テキストメッセージ'
 

@@ -7,7 +7,8 @@ import {
   ViewStyle,
   Platform,
 } from 'react-native'
-import styleType from '../../../utils/styleType'
+
+import styleType from '../../utils/styleType'
 
 interface Props {
   value?: string

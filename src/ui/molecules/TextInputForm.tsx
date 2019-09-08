@@ -3,8 +3,8 @@ import { StyleSheet, View, ViewStyle, TouchableOpacity } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 
 import TextInput from '../atoms/textInput'
-import styleType from '../../../utils/styleType'
-import { ColorPallet } from '../../styles'
+import styleType from '../../utils/styleType'
+import { ColorPallet } from '../styles'
 
 interface Props {
   currentText: string
