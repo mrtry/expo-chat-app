@@ -10,6 +10,7 @@ import {
   sendMessageAsync,
   subscribeMessageRepository,
 } from '../../store/repository/MessageRepository'
+import { getUuidOrGenerate } from '../../store/repository/IdentifyRepository'
 
 const PLACEHOLDER = 'テキストメッセージ'
 
@@ -52,7 +53,9 @@ export default class Chat extends React.Component<any, State> {
   }
 
   onSendButtonPressed = async () => {
+    const uuid = await getUuidOrGenerate()
     const message: Message = {
+      id: uuid,
       body: this.state.text,
       postedAt: new Date(),
     }

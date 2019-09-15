@@ -3,7 +3,7 @@ import firebase from 'firebase'
 import { View, StyleSheet } from 'react-native'
 import { getBottomSpace, ifIphoneX } from 'react-native-iphone-x-helper'
 
-import Chat from './src/ui/components/template/Chat'
+import Chat from './src/ui/template/Chat'
 import { ColorPallet } from './src/ui/styles'
 import config from './FirebaseConfig'
 
