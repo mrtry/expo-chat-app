@@ -11,24 +11,30 @@ import {
   subscribeMessageRepository,
 } from '../../store/repository/MessageRepository'
 import { getUuidOrGenerate } from '../../store/repository/IdentifyRepository'
+import { string } from 'prop-types'
 
 const PLACEHOLDER = 'テキストメッセージ'
 
 interface State {
   text: string
   messages: Message[]
+  uuid: string
 }
 
 export default class Chat extends React.Component<any, State> {
   state: State = {
     text: '',
     messages: [],
+    uuid: '',
   }
 
   async componentDidMount() {
     const listener = (message: Message) =>
       this.setState({ messages: [...this.state.messages, message] })
     subscribeMessageRepository(listener)
+
+    const uuid = await getUuidOrGenerate()
+    this.setState({ uuid })
   }
 
   render() {
@@ -38,7 +44,10 @@ export default class Chat extends React.Component<any, State> {
           <Appbar.Content title="ChatApp" />
         </Appbar.Header>
 
-        <ChatMessageList messages={[...this.state.messages].reverse()} />
+        <ChatMessageList
+          uuid={this.state.uuid}
+          messages={[...this.state.messages].reverse()}
+        />
 
         <Divider />
 
@@ -53,9 +62,8 @@ export default class Chat extends React.Component<any, State> {
   }
 
   onSendButtonPressed = async () => {
-    const uuid = await getUuidOrGenerate()
     const message: Message = {
-      id: uuid,
+      id: this.state.uuid,
       body: this.state.text,
       postedAt: new Date(),
     }

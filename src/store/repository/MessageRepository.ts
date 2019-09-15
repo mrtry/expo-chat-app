@@ -17,6 +17,7 @@ export function subscribeMessageRepository(
         if (change.type === 'added') {
           const data = change.doc.data()
           const message = {
+            id: data.id,
             body: data.body,
             postedAt: data.postedAt.toDate(),
           }
