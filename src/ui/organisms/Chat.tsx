@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, KeyboardAvoidingView, ViewStyle } from 'react-native'
-import { Appbar, Divider } from 'react-native-paper'
+import { Appbar, Divider, Theme, Colors } from 'react-native-paper'
 
 import TextInputForm from '../molecules/TextInputForm'
 import styleType from '../../utils/styleType'
@@ -40,7 +40,7 @@ export default class Chat extends React.Component<any, State> {
   render() {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        <Appbar.Header>
+        <Appbar.Header theme={theme}>
           <Appbar.Content title="ChatApp" />
         </Appbar.Header>
 
@@ -79,3 +79,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   }),
 })
+
+const theme: Theme = {
+  colors: {
+    primary: Colors.white,
+    text: Colors.black,
+  },
+}
