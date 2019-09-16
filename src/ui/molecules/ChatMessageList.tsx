@@ -3,9 +3,10 @@ import { StyleSheet, View, FlatList, ViewStyle } from 'react-native'
 
 import { Message } from '../../store/entity/message'
 import styleType from '../../utils/styleType'
-import ChatMessage from '../atoms/chatMessage'
+import ChatMessage, { Owner } from '../atoms/chatMessage'
 
 interface Props {
+  uuid: string
   messages: Message[]
 }
 
@@ -14,9 +15,17 @@ const component = (props: Props) => (
     <FlatList
       inverted
       data={props.messages}
-      renderItem={({ item }) => (
-        <ChatMessage message={item} style={styles.flatListItem} />
-      )}
+      renderItem={({ item }) => {
+        const owner: Owner = item.id == props.uuid ? 'me' : 'other'
+
+        return (
+          <ChatMessage
+            message={item}
+            owner={owner}
+            style={styles.flatListItem}
+          />
+        )
+      }}
       keyExtractor={item => `${item.body}-${item.postedAt}`}
       ListHeaderComponent={<View style={styles.flatListHeader} />}
       style={styles.flatListContainer}

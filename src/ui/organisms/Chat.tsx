@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, KeyboardAvoidingView, ViewStyle } from 'react-native'
-import { Appbar, Divider } from 'react-native-paper'
+import { Appbar, Divider, Theme, Colors } from 'react-native-paper'
 
 import TextInputForm from '../molecules/TextInputForm'
 import styleType from '../../utils/styleType'
@@ -10,34 +10,44 @@ import {
   sendMessageAsync,
   subscribeMessageRepository,
 } from '../../store/repository/MessageRepository'
+import { getUuidOrGenerate } from '../../store/repository/IdentifyRepository'
+import { string } from 'prop-types'
 
 const PLACEHOLDER = 'テキストメッセージ'
 
 interface State {
   text: string
   messages: Message[]
+  uuid: string
 }
 
 export default class Chat extends React.Component<any, State> {
   state: State = {
     text: '',
     messages: [],
+    uuid: '',
   }
 
   async componentDidMount() {
     const listener = (message: Message) =>
       this.setState({ messages: [...this.state.messages, message] })
     subscribeMessageRepository(listener)
+
+    const uuid = await getUuidOrGenerate()
+    this.setState({ uuid })
   }
 
   render() {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        <Appbar.Header>
+        <Appbar.Header theme={theme}>
           <Appbar.Content title="ChatApp" />
         </Appbar.Header>
 
-        <ChatMessageList messages={[...this.state.messages].reverse()} />
+        <ChatMessageList
+          uuid={this.state.uuid}
+          messages={[...this.state.messages].reverse()}
+        />
 
         <Divider />
 
@@ -53,6 +63,7 @@ export default class Chat extends React.Component<any, State> {
 
   onSendButtonPressed = async () => {
     const message: Message = {
+      id: this.state.uuid,
       body: this.state.text,
       postedAt: new Date(),
     }
@@ -68,3 +79,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   }),
 })
+
+const theme: Theme = {
+  colors: {
+    primary: Colors.white,
+    text: Colors.black,
+  },
+}
