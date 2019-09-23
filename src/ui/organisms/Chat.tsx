@@ -62,6 +62,8 @@ export default class Chat extends React.Component<any, State> {
   }
 
   onSendButtonPressed = async () => {
+    if (this.state.text.length == 0) return
+
     const message: Message = {
       id: this.state.uuid,
       body: this.state.text,
